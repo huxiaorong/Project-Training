@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">learnChinese</string>
+    <string name="title_activity_level_choose">LevelChooseActivity</string>
+</resources>
