@@ -16,9 +16,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    apply plugin: 'com.android.application'
+    apply plugin: 'org.greenrobot.greendao' // apply plugin
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.ping.greendao.gen'
+        targetGenDir 'src/main/java'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
+    //聊天用  greendao
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
+
+    //recyclerview
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

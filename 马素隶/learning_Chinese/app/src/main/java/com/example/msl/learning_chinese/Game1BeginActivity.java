@@ -43,7 +43,7 @@ public class Game1BeginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_begin_game:
-                    Intent intent = new Intent(Game1BeginActivity.this,Game1SelectActivity.class);
+                    Intent intent = new Intent(Game1BeginActivity.this,Game1PlayActivity.class);
                     startActivity(intent);
                     break;
             }
