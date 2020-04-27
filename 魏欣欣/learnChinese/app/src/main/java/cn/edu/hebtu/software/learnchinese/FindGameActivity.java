@@ -26,26 +26,6 @@ public class FindGameActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        playSoundMusic();
     }
-    //播放音乐
-    public void playSoundMusic(){
-        SoundPool.Builder builder= null;
-        SoundPool sp;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            builder = new SoundPool.Builder();
-            builder.setMaxStreams(10);
-            sp=builder.build();
-        }else{
-            sp=new SoundPool(10,5,5);
-        }
-        final Map<Integer,Integer> musicId=new HashMap<>();
-        musicId.put(1,sp.load(getApplicationContext(),R.raw.x1,1));
-        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                //指定播放多个音频流,可以同时播放
-                soundPool.play(musicId.get(1), 1, 1, 0, 0, 1);
-            }
-        });
-    }
+
 }
