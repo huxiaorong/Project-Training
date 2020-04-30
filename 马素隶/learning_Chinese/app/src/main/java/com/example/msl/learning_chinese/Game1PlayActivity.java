@@ -3,7 +3,9 @@ package com.example.msl.learning_chinese;
 import android.app.Activity;
 import android.content.Context;
 
+import android.nfc.FormatException;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +17,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Game1PlayActivity extends AppCompatActivity {
     private List<Msg> mMsgs;
@@ -26,17 +38,41 @@ public class Game1PlayActivity extends AppCompatActivity {
     private RecyclerView mRvChatList;
     private EditText mEtContent;
     private Button mBtSend;
-
-    //后台定时5s发送数据
+    private Idiom idiom;
+    private String rsp;
+    private  Runnable mrunnable;
     private Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             // TODO Auto-generated method stub
-            addMsg(new Msg(null, "来数据了！", Msg.TYPE_BLE, df.format(new java.util.Date())));
-            handler.postDelayed(this, 5000);
+            addMsg(new Msg(null, "欢迎来到成语接龙游戏，现在是你先开始，还是我先开始", Msg.TYPE_BLE, df.format(new java.util.Date())));
+
         }
     };
+
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    idiom = new Gson().fromJson(rsp,Idiom.class);
+                    Log.e("aaaaa",idiom.toString());
+                    mrunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            addMsg(new Msg(null, idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                        }
+                    };
+                    mhandler.post(mrunnable);
+                    showMsg();
+                    break;
+
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +82,8 @@ public class Game1PlayActivity extends AppCompatActivity {
         bindListener();
         mMsgDaoUtil = new MsgDaoUtil(this);
         showMsg();
-        handler.postDelayed(runnable, 5000);
+        handler.post(runnable);
+
     }
 
     public void showMsg(){
@@ -76,6 +113,15 @@ public class Game1PlayActivity extends AppCompatActivity {
     private boolean addMsg(Msg msg) {
         Log.e("msg",msg.toString());
         mAdapter.addItem(msg);
+        if (msg.getType()==1) {
+            if (msg.getContent().contains("我")) {
+
+            } else if (msg.getContent().contains("你")) {
+                reply();
+            } else {
+
+            }
+        }
         return mMsgDaoUtil.insertMsg(msg);
 
     }
@@ -118,7 +164,32 @@ public class Game1PlayActivity extends AppCompatActivity {
                     mEtContent.setText("");
             }
         }
+    }
+    /**
+     * 向服务器端发送内容
+     */
+    private void reply() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Constant.BASE_URL + "/rand")//设置网络请求的地址
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                rsp = response.body().string();
+                Log.e("rsp", rsp);
+                Message msg = new Message();
+                msg.what = 1;
+                mhandler.sendMessage(msg);
+
+            }
+        });
 
     }
 }
