@@ -1,15 +1,27 @@
 package cn.edu.hebtu.software.learnchinese;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +67,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private int row = 4;
     private int col = 4;
     private int countIndex = 0;
-    private int wordCount = 0;
 
-    private MediaPlayer mediaPlayer;
 
     private Handler mainHandle = new Handler() {
         @Override
@@ -68,7 +78,40 @@ public class LevelOne01Activity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         addTable();
                     }
+                    break;
+                case 2:
+                    new AlertDialog.Builder(LevelOne01Activity.this)
+                            .setMessage("挑战失败")
+                            .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Intent intent3 = new Intent(LevelOne01Activity.this, FindGameActivity.class);
+                                    intent3.putExtra("tag", "find");
+                                    startActivity(intent3);
+                                }
+                            })
+                            .setNegativeButton("重新挑战", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    bar.setProgress(100);
+                                    bar.setTimeMillis(5000);
+                                    bar.start();
+                                    Thread thread1 = new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            while (true) {
+                                                int pro = bar.getProgress();
+                                                if (pro == 0) {
+                                                    Message msg = new Message();
+                                                    msg.what = 2;
+                                                    mainHandle.sendMessage(msg);
+                                                    break;
+                                                }
+                                            }
 
+                                        }
+                                    });
+                                    thread1.start();
+                                }
+                            }).create().show();
                     break;
             }
         }
@@ -84,23 +127,43 @@ public class LevelOne01Activity extends AppCompatActivity {
         tvGuan = findViewById(R.id.tv_guan);
         imgRuturn = findViewById(R.id.img_return);
 
+
         findLikeWord();
-        //playBackSound();
 
         bar = findViewById(R.id.cp);
         //bar.setProgress(100);
-        bar.setTimeMillis(2000);
+        if (Constant.level==1){
+            bar.setTimeMillis(10000);
+        }else if(Constant.level==2){
+            bar.setTimeMillis(5000);
+        }else if(Constant.level==3){
+            bar.setTimeMillis(3000);
+        }
+
         bar.start();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    int pro = bar.getProgress();
+                    if (pro == 0) {
+                        Message msg = new Message();
+                        msg.what = 2;
+                        mainHandle.sendMessage(msg);
+                        break;
+                    }
+                }
+
+            }
+        });
+        thread.start();
+
 
         imgRuturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if (mediaPlayer!=null){
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    mediaPlayer=null;
-                }*/
-                Intent intent = new Intent(LevelOne01Activity.this, LevelOneStarActivity.class);
+                Intent intent = new Intent(LevelOne01Activity.this, FindGameActivity.class);
+                intent.putExtra("tag", "find");
                 startActivity(intent);
             }
         });
@@ -110,14 +173,62 @@ public class LevelOne01Activity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void addTable() {
         Random r = new Random();
-        final int x = r.nextInt(row*col);
+        final int x = r.nextInt(row * col);
 
-        tvQues.setText("请找出“" + likeWordArray[0] + "”字");
+        //tvQues.setText("请找出“" + likeWordArray[0] + "”字");
         tvGuan.setText("第" + Constant.guan + "关");
+
+        final SpannableStringBuilder style = new SpannableStringBuilder();
+
+        //设置文字
+        style.append("请找出“" + likeWordArray[0] + "”字");
+
+        //设置部分文字点击事件
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Toast.makeText(LevelOne01Activity.this, "触发点击事件!", Toast.LENGTH_SHORT).show();
+            }
+
+            //去掉下划线
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setUnderlineText(false);
+//                super.updateDrawState(ds);
+            }
+        } ;
+
+        style.setSpan(clickableSpan, 4, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvQues.setText(style);
+
+        //设置部分文字颜色
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#0000FF"));
+        style.setSpan(foregroundColorSpan, 4, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        //设置字体大小
+        AbsoluteSizeSpan absoluteSizeSpan = new AbsoluteSizeSpan(70);
+        style.setSpan(absoluteSizeSpan, 4, 5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+
+        //设置粗体
+        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);//粗体
+        style.setSpan(styleSpan, 4, 5, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+
+
+
+        //配置给TextView
+        tvQues.setMovementMethod(LinkMovementMethod.getInstance());
+        tvQues.setText(style);
+
+
+
         int index = 0;
         TableLayout tableLayout = findViewById(R.id.table);
         tableLayout.setShrinkAllColumns(true);
-        for (int i = 0; i < row; i++) {
+        for (
+                int i = 0;
+                i < row; i++)
+
+        {
             TableRow tableRow = new TableRow(LevelOne01Activity.this);
             tableRow.setBackgroundColor(Color.rgb(255, 255, 255));
             for (int j = 0; j < col; j++) {
@@ -126,16 +237,26 @@ public class LevelOne01Activity extends AppCompatActivity {
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.e("点击事件", v.getId() + "");
-                        if(v.getId()==x){
-                            Toast.makeText(getApplicationContext(), "回答正确！", Toast.LENGTH_SHORT).show();
+                        if (bar.getProgress() > 0) {
+                            Log.e("点击事件", v.getId() + "");
+                            if (v.getId() == x) {
+                                //Toast.makeText(getApplicationContext(), "回答正确！", Toast.LENGTH_SHORT).show();
+                                Intent intent1 = new Intent(LevelOne01Activity.this, LevelOne01Activity.class);
+                                Constant.guan++;
+                                startActivity(intent1);
+                            } else {
+                                //Toast.makeText(getApplicationContext(), "挑战失败！", Toast.LENGTH_SHORT).show();
+                                Message msg = new Message();
+                                msg.what = 2;
+                                mainHandle.sendMessage(msg);
+                            }
                         }
                     }
                 });
 
-                if(textView.getId()==x){
+                if (textView.getId() == x) {
                     textView.setText(likeWordArray[0]);
-                }else{
+                } else {
                     textView.setText(likeWordArray[1]);
                 }
                 /*Log.e("x", x + "");
@@ -158,6 +279,7 @@ public class LevelOne01Activity extends AppCompatActivity {
             }
             tableLayout.addView(tableRow, new TableLayout.LayoutParams(FP, WC));
         }
+
     }
 
     public void findLikeWord() {
@@ -188,18 +310,6 @@ public class LevelOne01Activity extends AppCompatActivity {
 
     }
 
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_ok:
-                int nowGuan = Constant.guan;
-                Constant.guan = nowGuan + 1;
-                Intent intent = new Intent(LevelOne01Activity.this, LevelOne01Activity.class);
-                startActivity(intent);
-                break;
-
-        }
-    }
-
     //播放音乐
     public void playSoundMusic() {
         SoundPool.Builder builder = null;
@@ -212,7 +322,7 @@ public class LevelOne01Activity extends AppCompatActivity {
             sp = new SoundPool(10, 5, 5);
         }
         final Map<Integer, Integer> musicId = new HashMap<>();
-        musicId.put(1, sp.load(getApplicationContext(), R.raw.yekong, 1));
+        musicId.put(1, sp.load(getApplicationContext(), R.raw.backmusic, 1));
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 //指定播放多个音频流,可以同时播放
@@ -221,12 +331,8 @@ public class LevelOne01Activity extends AppCompatActivity {
         });
     }
 
-    public void playBackSound() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.yekong);
-        mediaPlayer.start();
-    }
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         Log.e("destory","de");
         if(mediaPlayer.isPlaying()){
@@ -234,5 +340,6 @@ public class LevelOne01Activity extends AppCompatActivity {
         }
         mediaPlayer.release();//释放资源
         super.onDestroy();
-    }
+    }*/
+
 }
