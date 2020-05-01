@@ -35,6 +35,7 @@ public class IdiomDao {
 	 * @param phrase
 	 */
 	public Idiom isIdiom(String phrase){
+		System.out.println(phrase);
 		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where idiom = ?");
 		query.setParameter(0, phrase);
 		return (Idiom) query.uniqueResult();
@@ -47,7 +48,8 @@ public class IdiomDao {
 	 * @return
 	 */
 	public Idiom findIdiomByWordS(String phrase) {
-		String wordE = phrase.substring(2);
+		String wordE = phrase.substring(3);
+		System.out.println(wordE);
 		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where wordS = ?");
 		query.setParameter(0, wordE);
 		List<Idiom> idioms = query.list();

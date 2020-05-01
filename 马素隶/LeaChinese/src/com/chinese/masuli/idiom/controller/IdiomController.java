@@ -27,14 +27,17 @@ public class IdiomController {
 		return idiom1;
 	}
 	
-	@RequestMapping(value = "edit/{phrase}")
+	@RequestMapping(value = "reply/{phrase}")
 	@ResponseBody
-	public void reply(@PathVariable("phrase") String phrase) throws Exception {
+	public String reply(@PathVariable("phrase") String phrase) throws Exception {
 		Idiom idiom = this.idiomService.isIdiom(phrase);
-		if (idiom.equals("")) {
-			
+		if (idiom==null) {
+			return "{\"r\":\"fail\"}";
 		}else{
-			this.idiomService.findIdiomByWordS(phrase);
+			Idiom idiom3 = this.idiomService.findIdiomByWordS(phrase);
+			Gson gson = new Gson();
+			String idiom1 = gson.toJson(idiom3);
+			return idiom1;
 		}
 	}
 	
