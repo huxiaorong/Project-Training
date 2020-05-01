@@ -36,14 +36,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Game1BeginActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Game1BeginActivity">
+        </activity>
         <activity android:name=".Game1PlayActivity"></activity>
+        <activity
+            android:name=".FindGameActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".LevelChooseActivity" />
+        <activity android:name=".LevelOneStarActivity" />
+        <activity android:name=".LevelOne01Activity"></activity>
     </application>
 
 </manifest>

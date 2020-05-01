@@ -10,7 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import com.chinese.masuli.entity.Idiom;
+import com.chinese.entity.Idiom;
+
 
 @Repository
 public class IdiomDao {

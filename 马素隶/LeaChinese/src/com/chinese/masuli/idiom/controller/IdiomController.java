@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chinese.masuli.entity.Idiom;
+import com.chinese.entity.Idiom;
 import com.chinese.masuli.idiom.service.IdiomService;
 import com.google.gson.Gson;
 

@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.chinese.masuli.entity.Idiom;
+import com.chinese.entity.Idiom;
 import com.chinese.masuli.idiom.dao.IdiomDao;
 
 @Service

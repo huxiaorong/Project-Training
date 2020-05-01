@@ -201,7 +201,7 @@ public class Game1PlayActivity extends AppCompatActivity {
     private void reply(int i) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                    .url(Constant.BASE_URL + "/rand")//设置网络请求的地址
+                    .url(Constant.GAME_ONE + "/rand")//设置网络请求的地址
                     .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -233,7 +233,7 @@ public class Game1PlayActivity extends AppCompatActivity {
     private void phrase() {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request  = new Request.Builder()
-                .url(Constant.BASE_URL + "/reply/"+content)//设置网络请求的地址
+                .url(Constant.GAME_ONE + "/reply/"+content)//设置网络请求的地址
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
