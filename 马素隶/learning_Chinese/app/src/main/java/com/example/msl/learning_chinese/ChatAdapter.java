@@ -33,10 +33,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == Msg.TYPE_BLE) {
             View view = mLayoutInflater.inflate(R.layout.item_chat_left, parent, false);
-            Log.e("left","123");
             return new ChatLeftViewHolder(view);
         } else {
-            Log.e("right","123");
             View view = mLayoutInflater.inflate(R.layout.item_chat_right, parent, false);
             return new ChatRightViewHolder(view);
         }
@@ -55,6 +53,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ((ChatRightViewHolder) holder).mTvMsgRight.setText(content);
             Log.e("content",content);
         }
+
+
     }
 
     @Override

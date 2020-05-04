@@ -43,12 +43,13 @@ public class Game1PlayActivity extends AppCompatActivity {
     private  Runnable mrunnable;
     private Handler handler = new Handler();
     private String content;
+    private TTSUtility ttsUtility ;
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             // TODO Auto-generated method stub
             addMsg(new Msg(null, "欢迎来到成语接龙游戏，现在是你先开始，还是我先开始", Msg.TYPE_BLE, df.format(new java.util.Date())));
-
+            ttsUtility.speaking("欢迎来到成语接龙游戏，现在是你先开始，还是我先开始");
         }
     };
 
@@ -63,6 +64,7 @@ public class Game1PlayActivity extends AppCompatActivity {
                         public void run() {
                             // TODO Auto-generated method stub
                             addMsg(new Msg(null, "我出的成语是："+idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                            ttsUtility.speaking("我出的成语是："+idiom.getIdiom());
                         }
                     };
                     break;
@@ -73,6 +75,7 @@ public class Game1PlayActivity extends AppCompatActivity {
                         public void run() {
                             // TODO Auto-generated method stub
                             addMsg(new Msg(null, "那我再来说一个好了："+idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                            ttsUtility.speaking("那我再来说一个好了："+idiom.getIdiom());
                         }
                     };
                     break;
@@ -83,6 +86,7 @@ public class Game1PlayActivity extends AppCompatActivity {
                             public void run() {
                                 // TODO Auto-generated method stub
                                 addMsg(new Msg(null, "你说的这个成语我好像不认识，重新再发一个吧", Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                ttsUtility.speaking("你说的这个成语我好像不认识，重新再发一个吧");
                             }
                         };
                     }else{
@@ -92,6 +96,7 @@ public class Game1PlayActivity extends AppCompatActivity {
                             public void run() {
                                 // TODO Auto-generated method stub
                                 addMsg(new Msg(null, idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                ttsUtility.speaking(idiom.getIdiom());
                             }
                         };
                     }
@@ -107,6 +112,7 @@ public class Game1PlayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1_play_acitivity);
+        ttsUtility = new TTSUtility(this);
         findViews();
         bindListener();
         mMsgDaoUtil = new MsgDaoUtil(this);

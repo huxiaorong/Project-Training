@@ -21,7 +21,7 @@ public class TTSUtility {
     // 语音合成对象
     private static SpeechSynthesizer mTts;
     //上下文
-    private Context mContext;
+    private static Context mContext;
 
     private volatile static TTSUtility instance;
     /**
@@ -76,7 +76,7 @@ public class TTSUtility {
      *
      * @param context 上下文
      */
-    private TTSUtility(Context context) {
+    public   TTSUtility(Context context) {
         mContext = context;
         // 初始化合成对象
         mTts = SpeechSynthesizer.createSynthesizer(mContext, new InitListener() {
@@ -126,7 +126,7 @@ public class TTSUtility {
      *
      * @param text
      */
-    public void speaking(String text) {
+    public static void speaking(String text) {
         if (TextUtils.isEmpty(text))
             return;
         int code = mTts.startSpeaking(text, mTtsListener);
