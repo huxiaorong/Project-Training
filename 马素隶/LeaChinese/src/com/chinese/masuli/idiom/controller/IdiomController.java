@@ -1,5 +1,7 @@
 package com.chinese.masuli.idiom.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -34,10 +36,15 @@ public class IdiomController {
 		if (idiom==null) {
 			return "{\"r\":\"fail\"}";
 		}else{
-			Idiom idiom3 = this.idiomService.findIdiomByWordS(phrase);
-			Gson gson = new Gson();
-			String idiom1 = gson.toJson(idiom3);
-			return idiom1;
+			List<Idiom> idioms=this.idiomService.findIdiomByWordS(phrase);
+			if (idioms.isEmpty()) {
+				return "{\"r\":\"fail\"}";
+			}else{
+				Idiom idiom3 = idioms.get(0);
+				Gson gson = new Gson();
+				String idiom1 = gson.toJson(idiom3);
+				return idiom1;
+			}
 		}
 	}
 	

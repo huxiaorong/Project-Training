@@ -48,13 +48,17 @@ public class IdiomDao {
 	 * @param phrase 用户输入的成语
 	 * @return
 	 */
-	public Idiom findIdiomByWordS(String phrase) {
-		String wordE = phrase.substring(3);
-		System.out.println(wordE);
-		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where wordS = ?");
-		query.setParameter(0, wordE);
-		List<Idiom> idioms = query.list();
-		return idioms.get(0);
+	public List<Idiom> findIdiomByWordS(String phrase) {
+		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where idiom = ?");
+		query.setParameter(0, phrase);
+		Idiom idiom = (Idiom) query.uniqueResult();
+		String pinyinE = idiom.getPinyinE();
+		System.out.println(pinyinE);
+		Query query1 = sessionFactory.getCurrentSession().createQuery("from Idiom where pinyinS = ?");
+		query1.setParameter(0, pinyinE);
+		List<Idiom> idioms = query1.list();
+		System.out.println(idioms.toString());
+		return idioms;
 	}
 	
  

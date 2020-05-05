@@ -13,9 +13,14 @@ import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -127,7 +132,11 @@ public class Game1PlayActivity extends AppCompatActivity {
         Log.e("msgs",mMsgs.toString());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRvChatList.setLayoutManager(linearLayoutManager);
-        mAdapter = new ChatAdapter(this, mMsgs);
+        if (idiom == null) {
+            mAdapter = new ChatAdapter(this, mMsgs,this);
+        }else{
+            mAdapter = new ChatAdapter(this,mMsgs,idiom,this);
+        }
         mRvChatList.setAdapter(mAdapter);
         //初试加载历史记录呈现最新消息
         mRvChatList.scrollToPosition(mAdapter.getItemCount() - 1);
@@ -260,4 +269,6 @@ public class Game1PlayActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

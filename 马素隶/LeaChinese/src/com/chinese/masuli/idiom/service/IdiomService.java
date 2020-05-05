@@ -1,5 +1,7 @@
 package com.chinese.masuli.idiom.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class IdiomService {
 		return idiomDao.isIdiom(phrase);
 	}
 	
-	public Idiom findIdiomByWordS(String phrase) {
+	public List<Idiom> findIdiomByWordS(String phrase) {
 		return idiomDao.findIdiomByWordS(phrase);
 	}
 }
