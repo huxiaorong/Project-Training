@@ -23,9 +23,14 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -34,6 +39,7 @@ import android.widget.Toast;
 
 
 import com.dinuscxj.progressbar.CircleProgressBar;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +61,15 @@ public class LevelOne01Activity extends AppCompatActivity {
     private TextView tvGuan;
     private ImageView imgRuturn;
     private CircleProgressbar bar;
+    private TextView tvWord;
+    private TextView tvPin;
+    private LinearLayout ll;
+
+    private Word word;
+    private String strword;
+
+    private PopupWindow popupWindow = null;
+    private View popupView = null;
 
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final int FP = ViewGroup.LayoutParams.FILL_PARENT;
@@ -67,6 +82,8 @@ public class LevelOne01Activity extends AppCompatActivity {
     private int row = 4;
     private int col = 4;
     private int countIndex = 0;
+
+    private Thread thread;
 
 
     private Handler mainHandle = new Handler() {
@@ -126,7 +143,16 @@ public class LevelOne01Activity extends AppCompatActivity {
         tvQues = findViewById(R.id.tv_ques);
         tvGuan = findViewById(R.id.tv_guan);
         imgRuturn = findViewById(R.id.img_return);
+        ll=findViewById(R.id.ll);
 
+        ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1.0f; //0.0-1.0
+                getWindow().setAttributes(lp);
+            }
+        });
 
         findLikeWord();
 
@@ -141,7 +167,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         }
 
         bar.start();
-        Thread thread = new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -188,6 +214,11 @@ public class LevelOne01Activity extends AppCompatActivity {
             @Override
             public void onClick(View widget) {
                 Toast.makeText(LevelOne01Activity.this, "触发点击事件!", Toast.LENGTH_SHORT).show();
+                // 显示PopupWindow
+
+                //查询汉字信息
+                if(popupWindow==null || !popupWindow.isShowing())
+                    showPopupWindow();
             }
 
             //去掉下划线
@@ -282,6 +313,7 @@ public class LevelOne01Activity extends AppCompatActivity {
 
     }
 
+
     public void findLikeWord() {
 
         FormBody body = new FormBody.Builder().add("findlevel", String.valueOf(Constant.level)).build();
@@ -299,8 +331,12 @@ public class LevelOne01Activity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                likeWord = response.body().string();
-                likeWordArray = likeWord.split("，");
+                strword = response.body().string();
+
+                Gson gson=new Gson();
+                word=gson.fromJson(strword, Word.class);
+
+                likeWordArray = word.getLikeword().split("，");
 
                 Message msg = new Message();
                 msg.what = 1;
@@ -332,14 +368,45 @@ public class LevelOne01Activity extends AppCompatActivity {
     }
 
 
-    /*@Override
-    protected void onDestroy() {
-        Log.e("destory","de");
-        if(mediaPlayer.isPlaying()){
-            mediaPlayer.stop();//停止音频的播放
-        }
-        mediaPlayer.release();//释放资源
-        super.onDestroy();
-    }*/
+    // 显示PopupWindow
+    private void showPopupWindow() {
+        // 创建popupWindow对象
+        popupWindow = new PopupWindow();
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 通过布局填充器创建View
+        popupView = getLayoutInflater()
+                .inflate(R.layout.activity_popwindow, null);
+        // 设置PopupWindow显示的内容视图
+        popupWindow.setContentView(popupView);
+        // 设置PopupWindow是否能响应外部点击事件
+        popupWindow.setOutsideTouchable(true);
+        // 设置PopupWindow是否相应点击事件
+        popupWindow.setTouchable(true);
+
+        tvWord=popupView.findViewById(R.id.tv_word);
+        tvPin=popupView.findViewById(R.id.tv_pin);
+        tvWord.setText(word.getWord());
+        tvPin.setText(word.getPinyin());
+
+        //popupWindow.setBackgroundDrawable(this.getResources().getDrawable(
+                //R.mipmap.ic_launcher));// 设置背景图片，不能在布局中设置，要通过代码来设置
+
+        // 在指定控件下方显示PopupWindow
+        popupWindow.showAsDropDown(tvQues,10,100);
+
+        //背景变为透明
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.8f; //0.0-1.0
+        getWindow().setAttributes(lp);
+
+       //int weight = getWindowManager().getDefaultDisplay().getWidth();
+
+        popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        //popupWindow.showAtLocation(findViewById(R.id.ll), Gravity.NO_GRAVITY,0,0);
+
+
+    }
 
 }
