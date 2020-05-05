@@ -63,6 +63,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private CircleProgressbar bar;
     private TextView tvWord;
     private TextView tvPin;
+    private TextView tvExplain;
     private LinearLayout ll;
 
     private Word word;
@@ -89,9 +90,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private final int mis2 = 5000;
     private final int mis3 = 3000;
 
-    private String tag = "";
-    private String tag1 = "";
-
+    private String tag="start";
 
     private Handler mainHandle = new Handler() {
         @Override
@@ -133,59 +132,9 @@ public class LevelOne01Activity extends AppCompatActivity {
                                         public void run() {
                                             while (true) {
                                                 int pro = bar.getProgress();
-                                                if (pro == 0 && tag1.equals("")) {
+                                                if (pro == 0) {
                                                     Message msg = new Message();
                                                     msg.what = 2;
-                                                    mainHandle.sendMessage(msg);
-                                                    break;
-                                                } else if (pro == 0 && tag1.equals("stop")) {
-                                                    break;
-                                                }
-                                            }
-
-                                        }
-                                    });
-                                    thread1.start();
-                                }
-                            }).create().show();
-                    break;
-                case 3:
-
-                    new AlertDialog.Builder(LevelOne01Activity.this)
-                            .setMessage("选错了 ")
-                            .setPositiveButton("退出", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    Intent intent3 = new Intent(LevelOne01Activity.this, FindGameActivity.class);
-                                    intent3.putExtra("tag", "find");
-                                    startActivity(intent3);
-                                }
-                            })
-                            .setNegativeButton("重新挑战", new DialogInterface.OnClickListener() {
-                                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    bar.setProgress(100);
-                                    if (Constant.level == 1) {
-                                        bar.setTimeMillis(mis1);
-                                    } else if (Constant.level == 2) {
-                                        bar.setTimeMillis(mis2);
-                                    } else if (Constant.level == 3) {
-                                        bar.setTimeMillis(mis3);
-                                    }
-
-                                    bar.start();
-
-                                    Thread thread1 = new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            while (true) {
-                                                int pro = bar.getProgress();
-                                                if (pro == 0 && tag1.equals("")) {
-                                                    Message msg = new Message();
-                                                    msg.what = 2;
-                                                    mainHandle.sendMessage(msg);
-                                                } else if (pro == 0 && tag1.equals("stop")){
-                                                    Message msg = new Message();
-                                                    msg.what = 3;
                                                     mainHandle.sendMessage(msg);
                                                     break;
                                                 }
@@ -239,17 +188,13 @@ public class LevelOne01Activity extends AppCompatActivity {
             public void run() {
                 while (true) {
                     int pro = bar.getProgress();
-                    if (pro == 0 && thread.isInterrupted()==false) {
+                    if (pro == 0 && tag.equals("start")) {
                         Message msg = new Message();
                         msg.what = 2;
                         mainHandle.sendMessage(msg);
                         break;
-                    } else if (pro == 0 && thread.isInterrupted()==true) {
-                        Log.e("00000","Aaa");
-                        break;
                     }
                 }
-
             }
         });
         thread.start();
@@ -271,7 +216,6 @@ public class LevelOne01Activity extends AppCompatActivity {
         Random r = new Random();
         final int x = r.nextInt(row * col);
 
-        //tvQues.setText("请找出“" + likeWordArray[0] + "”字");
         tvGuan.setText("第" + Constant.guan + "关");
 
         final SpannableStringBuilder style = new SpannableStringBuilder();
@@ -343,15 +287,7 @@ public class LevelOne01Activity extends AppCompatActivity {
                                 Constant.guan++;
                                 startActivity(intent1);
                             } else {
-                                bar.setProgress(0);
-                                thread.interrupt();
-                                Log.e("aaaaaaaaaaa",""+thread.isInterrupted());
-//                                tag = "stop";
-//                                tag1="stop";
-                                //Toast.makeText(getApplicationContext(), "挑战失败！", Toast.LENGTH_SHORT).show();
-                                /*Message msg = new Message();
-                                msg.what = 3;
-                                mainHandle.sendMessage(msg);*/
+                                playSoundMusic();
                             }
                         }
 
@@ -372,7 +308,6 @@ public class LevelOne01Activity extends AppCompatActivity {
         }
 
     }
-
 
 
     public void findLikeWord() {
@@ -407,7 +342,7 @@ public class LevelOne01Activity extends AppCompatActivity {
 
     }
 
-    //播放音乐
+    //播放提示音乐
     public void playSoundMusic() {
         SoundPool.Builder builder = null;
         SoundPool sp;
@@ -419,7 +354,7 @@ public class LevelOne01Activity extends AppCompatActivity {
             sp = new SoundPool(10, 5, 5);
         }
         final Map<Integer, Integer> musicId = new HashMap<>();
-        musicId.put(1, sp.load(getApplicationContext(), R.raw.backmusic, 1));
+        musicId.put(1, sp.load(getApplicationContext(), R.raw.x2, 1));
         sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 //指定播放多个音频流,可以同时播放
@@ -431,6 +366,9 @@ public class LevelOne01Activity extends AppCompatActivity {
 
     // 显示PopupWindow
     private void showPopupWindow() {
+        bar.setProgress(bar.getProgress());
+        bar.stop();
+        tag="wait";
         // 创建popupWindow对象
         popupWindow = new PopupWindow();
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -447,14 +385,19 @@ public class LevelOne01Activity extends AppCompatActivity {
 
         tvWord = popupView.findViewById(R.id.tv_word);
         tvPin = popupView.findViewById(R.id.tv_pin);
+        tvExplain=popupView.findViewById(R.id.tv_phrase);
         tvWord.setText(word.getWord());
         tvPin.setText(word.getPinyin());
+        tvExplain.setText(word.getExplanation());
+        tvExplain.setTextSize(25);
+        tvWord.setTextSize(30);
+        tvPin.setTextSize(25);
 
         //popupWindow.setBackgroundDrawable(this.getResources().getDrawable(
         //R.mipmap.ic_launcher));// 设置背景图片，不能在布局中设置，要通过代码来设置
 
         // 在指定控件下方显示PopupWindow
-        popupWindow.showAsDropDown(tvQues, 10, 100);
+       // popupWindow.showAsDropDown(tvQues, 10, 100);
 
         //背景变为透明
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -464,10 +407,20 @@ public class LevelOne01Activity extends AppCompatActivity {
         //int weight = getWindowManager().getDefaultDisplay().getWidth();
 
         popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        //popupWindow.showAtLocation(findViewById(R.id.ll), Gravity.NO_GRAVITY,0,0);
+        popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.showAtLocation(findViewById(R.id.ll), Gravity.BOTTOM,0,0);
 
 
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1.0f; //0.0-1.0
+                getWindow().setAttributes(lp);
+                tag="start";
+                bar.start();
+            }
+        });
     }
 
 }
