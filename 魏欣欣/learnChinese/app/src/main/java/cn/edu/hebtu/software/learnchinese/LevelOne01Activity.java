@@ -3,7 +3,10 @@ package cn.edu.hebtu.software.learnchinese;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
@@ -26,8 +29,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -65,6 +70,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private TextView tvPin;
     private TextView tvExplain;
     private LinearLayout ll;
+    private TableLayout tableLayout;
 
     private Word word;
     private String strword;
@@ -90,7 +96,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private final int mis2 = 5000;
     private final int mis3 = 3000;
 
-    private String tag="start";
+    private String tag = "start";
 
     private Handler mainHandle = new Handler() {
         @Override
@@ -144,7 +150,7 @@ public class LevelOne01Activity extends AppCompatActivity {
                                     });
                                     thread1.start();
                                 }
-                            }).create().show();
+                            }).setCancelable(false).create().show();
                     break;
             }
         }
@@ -161,6 +167,14 @@ public class LevelOne01Activity extends AppCompatActivity {
         imgRuturn = findViewById(R.id.img_return);
         ll = findViewById(R.id.ll);
 
+        int resId = getResources().getIdentifier("a"+Constant.guan, "drawable", this.getPackageName());
+
+        if(resId!=0){
+            Drawable image = getResources().getDrawable(resId);
+            ll.setBackground(image);
+        }
+
+
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +185,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         });
 
         findLikeWord();
+
 
         bar = findViewById(R.id.cp);
         //bar.setProgress(100);
@@ -265,15 +280,14 @@ public class LevelOne01Activity extends AppCompatActivity {
 
 
         int index = 0;
-        TableLayout tableLayout = findViewById(R.id.table);
+        tableLayout = findViewById(R.id.table);
         tableLayout.setShrinkAllColumns(true);
         for (int i = 0; i < row; i++) {
             TableRow tableRow = new TableRow(LevelOne01Activity.this);
-            tableRow.setBackgroundColor(Color.rgb(255, 255, 255));
+            //tableRow.setBackgroundColor(Color.rgb(255, 255, 255));
             for (int j = 0; j < col; j++) {
                 final TextView textView = new TextView(LevelOne01Activity.this);
                 textView.setId(countIndex++);
-
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -368,7 +382,7 @@ public class LevelOne01Activity extends AppCompatActivity {
     private void showPopupWindow() {
         bar.setProgress(bar.getProgress());
         bar.stop();
-        tag="wait";
+        tag = "wait";
         // 创建popupWindow对象
         popupWindow = new PopupWindow();
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
@@ -385,7 +399,7 @@ public class LevelOne01Activity extends AppCompatActivity {
 
         tvWord = popupView.findViewById(R.id.tv_word);
         tvPin = popupView.findViewById(R.id.tv_pin);
-        tvExplain=popupView.findViewById(R.id.tv_phrase);
+        tvExplain = popupView.findViewById(R.id.tv_phrase);
         tvWord.setText(word.getWord());
         tvPin.setText(word.getPinyin());
         tvExplain.setText(word.getExplanation());
@@ -397,7 +411,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         //R.mipmap.ic_launcher));// 设置背景图片，不能在布局中设置，要通过代码来设置
 
         // 在指定控件下方显示PopupWindow
-       // popupWindow.showAsDropDown(tvQues, 10, 100);
+        // popupWindow.showAsDropDown(tvQues, 10, 100);
 
         //背景变为透明
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -408,7 +422,7 @@ public class LevelOne01Activity extends AppCompatActivity {
 
         popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        popupWindow.showAtLocation(findViewById(R.id.ll), Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(findViewById(R.id.ll), Gravity.BOTTOM, 0, 0);
 
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -417,10 +431,11 @@ public class LevelOne01Activity extends AppCompatActivity {
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
                 lp.alpha = 1.0f; //0.0-1.0
                 getWindow().setAttributes(lp);
-                tag="start";
+                tag = "start";
                 bar.start();
             }
         });
     }
-
 }
+
+
