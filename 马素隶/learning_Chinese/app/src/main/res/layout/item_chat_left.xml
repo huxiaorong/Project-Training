@@ -5,7 +5,8 @@
     android:orientation="vertical">
 
         <TextView
-            android:textColor="#000"
+            android:textColor="#505050"
+            android:textSize="12dp"
             android:id="@+id/tv_left_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,16 +29,15 @@
                     android:src="@drawable/head_picture" />
 
                 <TextView
+                    android:padding="3dp"
                     android:id="@+id/tv_msg_left"
                     android:layout_marginTop="10dp"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.8"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/et_content_bg"
-                    android:text="欢迎来玩成语接龙游戏，在本游戏过程中，你可以点击成语了解详细解释，也可以随时退出，现在是你先开始还是我先开始"
-                    android:textColor="#000" />
+                    android:textColor="#fff" />
             </LinearLayout>
         </LinearLayout>
 

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinese.entity.Idiom;
@@ -19,7 +20,7 @@ public class IdiomController {
 
 	@Resource
 	private IdiomService idiomService;
-	
+
 	@RequestMapping("/rand")
 	@ResponseBody
 	public String index() throws Exception {
@@ -28,18 +29,42 @@ public class IdiomController {
 		String idiom1 = gson.toJson(idiom);
 		return idiom1;
 	}
-	
-	@RequestMapping(value = "reply/{phrase}")
+
+	@RequestMapping(value = "reply")
 	@ResponseBody
-	public String reply(@PathVariable("phrase") String phrase) throws Exception {
-		Idiom idiom = this.idiomService.isIdiom(phrase);
-		if (idiom==null) {
+	public String reply(@RequestParam("userContent") String userContent, @RequestParam("phrase") String phrase)
+			throws Exception {
+		Idiom idiom = this.idiomService.isIdiom(userContent);
+		if (idiom == null) {
 			return "{\"r\":\"fail\"}";
-		}else{
-			List<Idiom> idioms=this.idiomService.findIdiomByWordS(phrase);
+		} else {
+			if (!idiomService.isLogical(userContent, phrase)) {
+				return "{\"r\":\"false\"}";
+			} else {
+				List<Idiom> idioms = this.idiomService.findIdiomByWordS(userContent);
+				if (idioms.isEmpty()) {
+					return "{\"r\":\"defeat\"}";
+				} else {
+					Idiom idiom3 = idioms.get(0);
+					Gson gson = new Gson();
+					String idiom1 = gson.toJson(idiom3);
+					return idiom1;
+				}
+			}
+		}
+	}
+
+	@RequestMapping(value = "user")
+	@ResponseBody
+	public String user(@RequestParam("userContent") String userContent) throws Exception {
+		Idiom idiom = this.idiomService.isIdiom(userContent);
+		if (idiom == null) {
+			return "{\"r\":\"fail\"}";
+		} else {
+			List<Idiom> idioms = this.idiomService.findIdiomByWordS(userContent);
 			if (idioms.isEmpty()) {
-				return "{\"r\":\"fail\"}";
-			}else{
+				return "{\"r\":\"defeat\"}";
+			} else {
 				Idiom idiom3 = idioms.get(0);
 				Gson gson = new Gson();
 				String idiom1 = gson.toJson(idiom3);
@@ -47,6 +72,5 @@ public class IdiomController {
 			}
 		}
 	}
-	
-	
+
 }

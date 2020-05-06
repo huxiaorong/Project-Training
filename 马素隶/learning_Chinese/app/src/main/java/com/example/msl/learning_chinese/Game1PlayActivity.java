@@ -45,10 +45,10 @@ public class Game1PlayActivity extends AppCompatActivity {
     private Button mBtSend;
     private Idiom idiom;
     private String rsp;
-    private  Runnable mrunnable;
+    private Runnable mrunnable;
     private Handler handler = new Handler();
     private String content;
-    private TTSUtility ttsUtility ;
+    private TTSUtility ttsUtility;
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -58,57 +58,84 @@ public class Game1PlayActivity extends AppCompatActivity {
         }
     };
 
-    private Handler mhandler = new Handler(){
+    private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    idiom = new Gson().fromJson(rsp,Idiom.class);
+                    idiom = new Gson().fromJson(rsp, Idiom.class);
                     mrunnable = new Runnable() {
                         @Override
                         public void run() {
                             // TODO Auto-generated method stub
-                            addMsg(new Msg(null, "我出的成语是："+idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
-                            ttsUtility.speaking("我出的成语是："+idiom.getIdiom());
+                            addMsg(new Msg(null, "我出的成语是：" + idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                            showMsg();
+                            ttsUtility.speaking("我出的成语是：" + idiom.getIdiom());
                         }
                     };
+                    mhandler.post(mrunnable);
                     break;
                 case 3:
-                    idiom = new Gson().fromJson(rsp,Idiom.class);
+                    idiom = new Gson().fromJson(rsp, Idiom.class);
                     mrunnable = new Runnable() {
                         @Override
                         public void run() {
                             // TODO Auto-generated method stub
-                            addMsg(new Msg(null, "那我再来说一个好了："+idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
-                            ttsUtility.speaking("那我再来说一个好了："+idiom.getIdiom());
+                            addMsg(new Msg(null, "那我再来说一个好了：" + idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                            showMsg();
+                            ttsUtility.speaking("那我再来说一个好了：" + idiom.getIdiom());
                         }
                     };
+                    mhandler.post(mrunnable);
                     break;
                 case 2:
-                    if (rsp.equals("{\"r\":\"fail\"}")){
+                    if (rsp.equals("{\"r\":\"fail\"}")) {
                         mrunnable = new Runnable() {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
-                                addMsg(new Msg(null, "你说的这个成语我好像不认识，重新再发一个吧", Msg.TYPE_BLE, df.format(new java.util.Date())));
-                                ttsUtility.speaking("你说的这个成语我好像不认识，重新再发一个吧");
+                                addMsg(new Msg(null, "你发的这个成语我好像不认识，重新再发一个吧", Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                showMsg();
+                                ttsUtility.speaking("你发的这个成语我好像不认识，重新再发一个吧");
                             }
                         };
-                    }else{
-                        idiom = new Gson().fromJson(rsp,Idiom.class);
+                    } else if (rsp.equals("{\"r\":\"false\"}")) {
+                        mrunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                addMsg(new Msg(null, "你发的成语接不上奥，请再发一个", Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                showMsg();
+                                ttsUtility.speaking("你发的成语接不上奥，请再发一个");
+                            }
+                        };
+                    } else if (rsp.equals("{\"r\":\"defeat\"}")) {
+                        mrunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                // TODO Auto-generated method stub
+                                addMsg(new Msg(null, "你发的成语我绞尽脑汁都接不上，请再发一个吧", Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                showMsg();
+                                ttsUtility.speaking("你发的成语我绞尽脑汁都接不上，请再发一个吧");
+                            }
+                        };
+                    }else {
+                        idiom = new Gson().fromJson(rsp, Idiom.class);
                         mrunnable = new Runnable() {
                             @Override
                             public void run() {
                                 // TODO Auto-generated method stub
                                 addMsg(new Msg(null, idiom.getIdiom(), Msg.TYPE_BLE, df.format(new java.util.Date())));
+                                showMsg();
                                 ttsUtility.speaking(idiom.getIdiom());
                             }
                         };
                     }
+                    mhandler.post(mrunnable);
                     break;
             }
-            mhandler.post(mrunnable);
-            showMsg();
+
+
         }
     };
 
@@ -126,16 +153,18 @@ public class Game1PlayActivity extends AppCompatActivity {
 
     }
 
-    public void showMsg(){
+    public void showMsg() {
         //加载历史聊天记录
         mMsgs = mMsgDaoUtil.queryAllMsg();
-        Log.e("msgs",mMsgs.toString());
+        Log.e("msgs", mMsgs.toString());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        //软键盘弹出RecyclerView会随之上移
+        linearLayoutManager.setStackFromEnd(true);
         mRvChatList.setLayoutManager(linearLayoutManager);
         if (idiom == null) {
-            mAdapter = new ChatAdapter(this, mMsgs,this);
-        }else{
-            mAdapter = new ChatAdapter(this,mMsgs,idiom,this);
+            mAdapter = new ChatAdapter(this, mMsgs, this);
+        } else {
+            mAdapter = new ChatAdapter(this, mMsgs, idiom, this);
         }
         mRvChatList.setAdapter(mAdapter);
         //初试加载历史记录呈现最新消息
@@ -155,7 +184,7 @@ public class Game1PlayActivity extends AppCompatActivity {
 
 
     private boolean addMsg(Msg msg) {
-        Log.e("msg",msg.toString());
+        Log.e("msg", msg.toString());
         mAdapter.addItem(msg);
         return mMsgDaoUtil.insertMsg(msg);
 
@@ -200,7 +229,7 @@ public class Game1PlayActivity extends AppCompatActivity {
 
                     } else if (msg.getContent().contains("你")) {
                         reply(1);
-                    } else if(msg.getContent().contains("不会")){
+                    } else if (msg.getContent().contains("不会")) {
                         reply(2);
                     } else {
                         phrase();
@@ -210,14 +239,15 @@ public class Game1PlayActivity extends AppCompatActivity {
             }
         }
     }
+
     /**
      * 向服务器端发送内容
      */
     private void reply(int i) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                    .url(Constant.GAME_ONE + "/rand")//设置网络请求的地址
-                    .build();
+                .url(Constant.GAME_ONE + "/rand")//设置网络请求的地址
+                .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -230,10 +260,10 @@ public class Game1PlayActivity extends AppCompatActivity {
                 rsp = response.body().string();
                 Log.e("rsp", rsp);
                 Message msg = new Message();
-                if (i==1) {
+                if (i == 1) {
                     msg.what = 1;
-                }else if(i==2){
-                    msg.what=3;
+                } else if (i == 2) {
+                    msg.what = 3;
                 }
                 mhandler.sendMessage(msg);
 
@@ -247,9 +277,27 @@ public class Game1PlayActivity extends AppCompatActivity {
      */
     private void phrase() {
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request  = new Request.Builder()
-                .url(Constant.GAME_ONE + "/reply/"+content)//设置网络请求的地址
-                .build();
+        Request request;
+        FormBody body;
+        if (idiom!=null){
+            body = new FormBody.Builder()
+                    .add("userContent", content)
+                    .add("phrase", idiom.getIdiom())
+                    .build();
+            request = new Request.Builder()
+                    .url(Constant.GAME_ONE + "/reply")//设置网络请求的地址
+                    .post(body)
+                    .build();
+        }else {
+            body = new FormBody.Builder()
+                    .add("userContent", content)
+                    .build();
+            request = new Request.Builder()
+                    .url(Constant.GAME_ONE + "/user")//设置网络请求的地址
+                    .post(body)
+                    .build();
+        }
+
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override

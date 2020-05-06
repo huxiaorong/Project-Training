@@ -156,6 +156,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View v) {
                 TTSUtility ttsUtility = new TTSUtility(context);
                 ttsUtility.speaking(idiom.getIdiom());
+                ttsUtility.speaking(idiom.getParaphrase());
             }
         });
 

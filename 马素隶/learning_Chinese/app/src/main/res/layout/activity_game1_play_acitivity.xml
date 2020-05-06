@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/li_chat">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -16,12 +16,13 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="成语接龙"
-            android:textSize="26sp" />
+            android:textSize="15sp" />
 
         <ImageView
+            android:layout_marginTop="3dp"
             android:id="@+id/iv_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="0dp"
             android:src="@drawable/left" />
     </RelativeLayout>
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/linearLayout"
-            android:background="@drawable/et_content_bg">
+            android:background="@drawable/play_bg">
 
         </android.support.v7.widget.RecyclerView>
 

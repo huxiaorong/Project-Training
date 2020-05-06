@@ -39,12 +39,43 @@ public class IdiomDao {
 		System.out.println(phrase);
 		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where idiom = ?");
 		query.setParameter(0, phrase);
-		return (Idiom) query.uniqueResult();
+		List<Idiom> idioms = query.list();
+		if (idioms.size()==0) {
+			return null;
+		}else{
+			return idioms.get(0);
+		}
 	}
 	
+	/**
+	 * 判断用户输入成语是否符合逻辑
+	 * @param userContent
+	 * @param phrase
+	 * @return
+	 */
+	public boolean isLogical(String userContent,String phrase) {
+		Query query = sessionFactory.getCurrentSession().createQuery("from Idiom where idiom = ?");
+		query.setParameter(0, phrase);
+		List<Idiom> idioms = query.list();
+		Idiom idiom = idioms.get(0);
+		System.out.println(idiom);
+		Query query1 = sessionFactory.getCurrentSession().createQuery("from Idiom where idiom = ?");
+		query1.setParameter(0, userContent);
+		List<Idiom> idioms1 = query1.list();
+		Idiom idiom2 = idioms1.get(0);
+		System.out.println(idiom2);
+		System.out.println(idiom.getPinyinE()+","+idiom2.getPinyinS());
+		if (idiom.getPinyinE().equals(idiom2.getPinyinS())) {
+			return true;
+		}else{
+			return false;
+		}
+		
+		
+	}
 
 	/**
-	 * 根据最后一个字查找成语
+	 * 根据最后一个字的拼音查找成语
 	 * @param phrase 用户输入的成语
 	 * @return
 	 */

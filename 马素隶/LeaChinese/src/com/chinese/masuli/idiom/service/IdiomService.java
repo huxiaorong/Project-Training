@@ -26,4 +26,8 @@ public class IdiomService {
 	public List<Idiom> findIdiomByWordS(String phrase) {
 		return idiomDao.findIdiomByWordS(phrase);
 	}
+	
+	public boolean isLogical(String userContent,String phrase) {
+		return idiomDao.isLogical(userContent, phrase);
+	}
 }
