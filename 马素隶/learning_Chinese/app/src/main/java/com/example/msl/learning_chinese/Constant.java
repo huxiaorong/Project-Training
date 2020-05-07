@@ -7,6 +7,7 @@ public class Constant {
     public final static String GAME_ONE=BASE_URL+"/idiom";
     public static int level=0;
     public static int guan=1;
-    public final static String GAME_TWO=BASE_URL+"/word/";
+    public final static String GAME_TWO=BASE_URL+"/findword/";
     public static String tag="open";
+    public static User USER=new User();
 }

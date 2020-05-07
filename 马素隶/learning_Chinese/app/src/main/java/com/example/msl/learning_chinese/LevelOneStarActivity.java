@@ -26,7 +26,7 @@ public class LevelOneStarActivity extends AppCompatActivity {
         imgReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intentReturn=new Intent(LevelOneStarActivity.this,LevelChooseActivity.class);
+                intentReturn=new Intent(LevelOneStarActivity.this,LevelOne01Activity.class);
                 startActivity(intentReturn);
             }
         });

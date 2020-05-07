@@ -2,6 +2,7 @@ package com.example.msl.learning_chinese;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class FindGameActivity extends AppCompatActivity implements View.OnTouchListener, GestureDetector.OnGestureListener{
 
@@ -22,8 +34,10 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
     private ImageView back;
     private Spinner spinner;
     private RelativeLayout rl;
-    private MediaPlayer mediaPlayer;
     private GestureDetector gd;
+
+    private MediaPlayer mediaPlayer;
+    private OkHttpClient okHttpClient = new OkHttpClient();
 
     protected void onNewIntent(Intent intent) {
 
@@ -48,14 +62,21 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_game);
 
-        start = findViewById(R.id.btn_start);
-        open = findViewById(R.id.open);
-        back = findViewById(R.id.img_return);
-        spinner=findViewById(R.id.spinner);
         rl = findViewById(R.id.rl_rl);
         rl.setOnTouchListener(this);
         rl.setLongClickable(true);
         gd = new GestureDetector(this, this);
+
+        //虚拟数据
+        Constant.USER.setId(1);
+        Constant.USER.setLevelone(4);
+        Constant.USER.setLeveltwo(3);
+        Constant.USER.setLevelthree(2);
+
+        start = findViewById(R.id.btn_start);
+        open = findViewById(R.id.open);
+        back = findViewById(R.id.img_return);
+        spinner=findViewById(R.id.spinner);
         setSpinner();
 
         open.setTag("open");
@@ -88,6 +109,11 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
                 //点击处理事件
                 Constant.level=position+1;
 
+                if(Constant.USER.getId()==0||Constant.USER==null){
+                   Constant.guan=1;
+                }
+
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -101,6 +127,15 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FindGameActivity.this, LevelOne01Activity.class);
+                if(Constant.USER.getId()!=0&&Constant.USER!=null){
+                    if(Constant.level==1){
+                        Constant.guan=Constant.USER.getLevelone();
+                    }else if(Constant.level==2){
+                        Constant.guan=Constant.USER.getLeveltwo();
+                    }else if(Constant.level==3){
+                        Constant.guan=Constant.USER.getLevelthree();
+                    }
+                }
                 startActivity(intent);
             }
         });
@@ -132,6 +167,9 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                saveUserLevelGuan(Constant.USER);
+
                 Intent intent = new Intent(FindGameActivity.this, MainActivity.class);
                 startActivity(intent);
                 mediaPlayer.stop();
@@ -139,6 +177,28 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
         });
     }
 
+    private void saveUserLevelGuan(User user) {
+        Gson gson=new Gson();
+        String strUser =gson.toJson(Constant.USER);
+        FormBody body = new FormBody.Builder().add("strUser", strUser).build();
+        Request request = new Request.Builder()
+                .url(Constant.GAME_TWO + "save")
+                .post(body)
+                .build();
+        final Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("message","successful");
+            }
+        });
+    }
 
     @Override
     public boolean onDown(MotionEvent e) {
@@ -200,5 +260,6 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
     public boolean onTouch(View v, MotionEvent event) {
         return gd.onTouchEvent(event);
     }
+
 
 }

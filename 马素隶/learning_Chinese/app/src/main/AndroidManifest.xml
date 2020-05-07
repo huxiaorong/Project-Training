@@ -48,7 +48,6 @@
         <activity
             android:name=".FindGameActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".LevelChooseActivity" />
         <activity android:name=".LevelOneStarActivity" />
         <activity android:name=".LevelOne01Activity"></activity>
     </application>

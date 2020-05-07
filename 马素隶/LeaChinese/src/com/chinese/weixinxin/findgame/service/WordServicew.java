@@ -9,8 +9,6 @@ import com.chinese.entity.Word;
 import com.chinese.weixinxin.findgame.dao.WordDaow;
 
 
-
-
 @Service
 @Transactional(readOnly = true)
 public class WordServicew {
