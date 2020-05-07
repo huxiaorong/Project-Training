@@ -54,6 +54,7 @@ public class Game1PlayActivity extends AppCompatActivity {
         public void run() {
             // TODO Auto-generated method stub
             addMsg(new Msg(null, "欢迎来到成语接龙游戏，现在是你先开始，还是我先开始", Msg.TYPE_BLE, df.format(new java.util.Date())));
+            showMsg();
             ttsUtility.speaking("欢迎来到成语接龙游戏，现在是你先开始，还是我先开始");
         }
     };
@@ -161,11 +162,7 @@ public class Game1PlayActivity extends AppCompatActivity {
         //软键盘弹出RecyclerView会随之上移
         linearLayoutManager.setStackFromEnd(true);
         mRvChatList.setLayoutManager(linearLayoutManager);
-        if (idiom == null) {
-            mAdapter = new ChatAdapter(this, mMsgs, this);
-        } else {
-            mAdapter = new ChatAdapter(this, mMsgs, idiom, this);
-        }
+        mAdapter = new ChatAdapter(this, mMsgs, this);
         mRvChatList.setAdapter(mAdapter);
         //初试加载历史记录呈现最新消息
         mRvChatList.scrollToPosition(mAdapter.getItemCount() - 1);

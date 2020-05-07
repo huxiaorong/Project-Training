@@ -72,5 +72,20 @@ public class IdiomController {
 			}
 		}
 	}
+	
+	
+	@RequestMapping(value = "detail")
+	@ResponseBody
+	public String idiomDetaill(@RequestParam("content") String content) throws Exception {
+		Idiom idiom = this.idiomService.isIdiom(content);
+		if (idiom == null) {
+			return "{\"r\":\"fail\"}";
+		} else {
+			Gson gson = new Gson();
+			String idiom1 = gson.toJson(idiom);
+			return idiom1;
+		}
+	}
+	
 
 }
