@@ -12,7 +12,7 @@ public class LevelChooseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_choose);
-        intent=new Intent(LevelChooseActivity.this,LevelOneStarActivity.class);
+        intent=new Intent(LevelChooseActivity.this,LevelOne01Activity.class);
     }
 
     public void onClickLevel(View view) {

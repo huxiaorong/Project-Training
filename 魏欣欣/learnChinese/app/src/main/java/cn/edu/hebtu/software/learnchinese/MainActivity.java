@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public void chick(View view) {
 
         Intent intent=new Intent(MainActivity.this,FindGameActivity.class);
+        intent.putExtra("tag","main");
         startActivity(intent);
     }
 }

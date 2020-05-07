@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "idioms")
+@Table(name = "idiom")
 public class Idiom {
 	//唯一标识
 	private int id;

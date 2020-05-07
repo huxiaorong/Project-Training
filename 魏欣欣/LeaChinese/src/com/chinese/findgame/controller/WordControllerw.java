@@ -3,6 +3,7 @@ package com.chinese.findgame.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chinese.entity.Word;
 import com.chinese.findgame.service.WordServicew;
+import com.google.gson.Gson;
 
 
 @Controller
@@ -28,7 +30,9 @@ public class WordControllerw {
 		if(word!=null) {
 			System.out.println(word.toString());
 			//session.setAttribute("user",user);
-			return word.getLikeword();
+			Gson gson=new Gson();
+			String wString = gson.toJson(word);
+			return wString;
 		}else {
 			return "{\"r\":\"fail\"}";
 		}
