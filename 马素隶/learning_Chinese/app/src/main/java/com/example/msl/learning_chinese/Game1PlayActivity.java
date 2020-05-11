@@ -223,7 +223,7 @@ public class Game1PlayActivity extends AppCompatActivity {
                     Msg msg = new Msg(null, content, Msg.TYPE_PHONE, df.format(new java.util.Date()));
                     addMsg(msg);
                     if (msg.getContent().contains("我")) {
-
+                        idiom = null;
                     } else if (msg.getContent().contains("你")) {
                         reply(1);
                     } else if (msg.getContent().contains("不会")) {
