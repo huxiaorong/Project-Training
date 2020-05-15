@@ -96,6 +96,10 @@ public class LevelOne01Activity extends AppCompatActivity {
     private final int mis2 = 5000;
     private final int mis3 = 3000;
 
+    //增加网格难度
+    private final int GUAN_LEVEL1=3;
+    private final int GUAN_LEVEL2=6;
+
     private String tag = "start";
 
     private Handler mainHandle = new Handler() {
@@ -162,9 +166,39 @@ public class LevelOne01Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_one01);
 
+        //判断是否是FindGame跳转过来的
+        String tag1=getIntent().getStringExtra("findToO1");
+        if(tag1.equals("findToO1")){
+            //1 2关
+            if(Constant.guan<GUAN_LEVEL1){
+                row=4;
+                col=4;
+            }
+            // 3 4 5关
+            else if(Constant.guan>=GUAN_LEVEL1 && Constant.guan<GUAN_LEVEL2){
+                row=5;
+                col=5;
+            }
+            //6 7 8 关
+            else if(Constant.guan>=GUAN_LEVEL2){
+                row=6;
+                col=6;
+            }
+
+        }else{
+            if(getIntent().getIntExtra("row",-1)!=-1){
+                row=getIntent().getIntExtra("row",-1);
+            }
+            if(getIntent().getIntExtra("col",-1)!=-1){
+                col=getIntent().getIntExtra("col",-1);
+            }
+        }
+
+
         tvQues = findViewById(R.id.tv_ques);
         tvGuan = findViewById(R.id.tv_guan);
         imgRuturn = findViewById(R.id.img_return);
+        tvExplain=findViewById(R.id.tv_phrase);
         ll = findViewById(R.id.ll);
 
         int resId = getResources().getIdentifier("a"+Constant.guan, "drawable", this.getPackageName());
@@ -306,7 +340,27 @@ public class LevelOne01Activity extends AppCompatActivity {
                                         Constant.USER.setLevelthree(Constant.guan);
                                     }
                                 }
-                                startActivity(intent1);
+                                //1 2关
+                                if(Constant.guan<GUAN_LEVEL1){
+                                    intent1.putExtra("row",4);
+                                    intent1.putExtra("col",4);
+                                    intent1.putExtra("findToO1","to");
+                                    startActivity(intent1);
+                                }
+                                // 3 4 5关
+                                else if(Constant.guan>=GUAN_LEVEL1 && Constant.guan<GUAN_LEVEL2){
+                                    intent1.putExtra("row",5);
+                                    intent1.putExtra("col",5);
+                                    intent1.putExtra("findToO1","to");
+                                    startActivity(intent1);
+                                }
+                                //6关 及以后
+                                else if(Constant.guan>=GUAN_LEVEL2){
+                                    intent1.putExtra("row",6);
+                                    intent1.putExtra("col",6);
+                                    intent1.putExtra("findToO1","to");
+                                    startActivity(intent1);
+                                }
 
                             } else {
                                 playSoundMusic();
@@ -322,7 +376,15 @@ public class LevelOne01Activity extends AppCompatActivity {
                     textView.setText(likeWordArray[1]);
                 }
 
-                textView.setTextSize(40);
+                if(Constant.guan<GUAN_LEVEL1){
+                    textView.offsetLeftAndRight(10);
+                    textView.setTextSize(45);
+                }else if(Constant.guan>=GUAN_LEVEL1 && Constant.guan<GUAN_LEVEL2){
+                    textView.setTextSize(40);
+                }else if(Constant.guan>=GUAN_LEVEL2){
+                    textView.setTextSize(35);
+                }
+
                 textView.setBackground(getResources().getDrawable(R.drawable.shaper));
                 tableRow.addView(textView);
             }
@@ -352,7 +414,6 @@ public class LevelOne01Activity extends AppCompatActivity {
                 strword = response.body().string();
 
                 if(!strword.equals("")){
-                    Log.e("strword",strword);
                     Gson gson = new Gson();
                     word = gson.fromJson(strword, Word.class);
 

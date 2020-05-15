@@ -69,9 +69,9 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
 
         //虚拟数据
         Constant.USER.setId(1);
-        Constant.USER.setLevelone(4);
-        Constant.USER.setLeveltwo(3);
-        Constant.USER.setLevelthree(2);
+        Constant.USER.setLevelone(1);
+        Constant.USER.setLeveltwo(1);
+        Constant.USER.setLevelthree(1);
 
         start = findViewById(R.id.btn_start);
         open = findViewById(R.id.open);
@@ -136,6 +136,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
                         Constant.guan=Constant.USER.getLevelthree();
                     }
                 }
+                intent.putExtra("findToO1","findToO1");
                 startActivity(intent);
             }
         });
