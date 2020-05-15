@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!-- 选项卡按钮所在布局 -->
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tab_widget"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <!-- 首页 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_homepage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_homepage"
+                android:textSize="20dp"
+                android:textColor="#979797"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"/>
+            <ImageView
+                android:id="@+id/img_1"
+                android:src="@drawable/homepagenormal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+
+        <!-- 复习 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_fuxi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_fuxi"
+                android:textSize="20dp"
+                android:textColor="#979797"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复习"/>
+            <ImageView
+                android:id="@+id/img_2"
+                android:src="@drawable/fuxinormal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+
+
+
+        <!-- 趣学 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_quxue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_quxue"
+                android:textSize="20dp"
+                android:textColor="#979797"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="趣学"/>
+            <ImageView
+                android:id="@+id/img_3"
+                android:src="@drawable/youxinormal"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Fragment内容显示的帧布局 -->
+    <FrameLayout
+        android:id="@+id/tab_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_widget" />
+
+</RelativeLayout>
