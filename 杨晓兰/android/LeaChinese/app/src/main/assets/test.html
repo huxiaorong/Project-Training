@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>2132</title>
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@1.3/dist/hanzi-writer.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+    <style>#character-target-div{background:#d1e7fd; margin:0 auto;width:140px;height:50px; line-height:100px; text-align:center; }</style>
+</head>
+<body bgcolor="#d1e7fd">
+<div id="character-target-div"></div>
+</body>
+<script>
+
+		function animate(length, arr) {
+			if(length == arr.length) return;
+			arr[length].animateCharacter({
+				onComplete: function(){
+					animate(length+1, arr);
+				}
+			})
+		}
+
+		function bishun(hanzi) {
+			var arr = hanzi.split("");
+			var content = document.getElementById("character-target-div");
+			while(content.hasChildNodes()) {
+				content.removeChild(content.firstChild)
+			}
+
+			var hanziarr = [];
+			for (var i = 0; i < arr.length; i++) {
+				var writer = HanziWriter.create('character-target-div', arr[i], {
+				  width: 70,
+				  height: 70,
+				  padding: 5,
+				  showCharacter: false,
+				  showOutline: true,
+				  strokeColor: '#000',
+				  onLoadCharDataError: function(reason){
+					  console.log(reason);
+				  }
+				});
+				hanziarr.push(writer);
+			}
+
+			animate(0, hanziarr);
+		};
+	</script>
+</html>
