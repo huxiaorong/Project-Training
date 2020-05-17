@@ -1,20 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#ffffff">
 
-    <TextView
-        android:onClick="chick"
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- 选项卡按钮所在布局 -->
+    <LinearLayout
+        android:id="@+id/tab_widget"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-</android.support.constraint.ConstraintLayout>
+        <!-- 首页 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_homepage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/homepagenormal" />
+            <TextView
+                android:id="@+id/tv_homepage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                android:textColor="#979797"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+        <!-- 复习 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_fuxi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/fuxinormal" />
+            <TextView
+                android:id="@+id/tv_fuxi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复习"
+                android:textColor="#979797"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+        <!-- 趣学 -->
+        <LinearLayout
+            android:id="@+id/tab_spec_quxue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+
+            <ImageView
+                android:id="@+id/img_3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/youxinormal" />
+            <TextView
+                android:id="@+id/tv_quxue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="趣学"
+                android:textColor="#979797"
+                android:textSize="15dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Fragment内容显示的帧布局 -->
+    <FrameLayout
+        android:id="@+id/tab_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_widget" />
+
+</RelativeLayout>

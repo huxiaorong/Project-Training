@@ -118,7 +118,7 @@ public class LevelOne01Activity extends AppCompatActivity {
                             .setMessage("时间到")
                             .setPositiveButton("退出", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    Intent intent3 = new Intent(LevelOne01Activity.this, FindGameActivity.class);
+                                    Intent intent3 = new Intent(LevelOne01Activity.this, MainActivity.class);
                                     intent3.putExtra("tag", "find");
                                     startActivity(intent3);
                                 }
@@ -251,7 +251,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         imgRuturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LevelOne01Activity.this, FindGameActivity.class);
+                Intent intent = new Intent(LevelOne01Activity.this, Game2Fragment.class);
                 intent.putExtra("tag", "find");
                 startActivity(intent);
             }

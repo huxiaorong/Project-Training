@@ -42,14 +42,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Game1BeginActivity">
-        </activity>
         <activity android:name=".Game1PlayActivity"></activity>
-        <activity
-            android:name=".FindGameActivity"
-            android:launchMode="singleTask" />
         <activity android:name=".LevelOneStarActivity" />
         <activity android:name=".LevelOne01Activity"></activity>
+        <activity android:name=".StudyActivity" />
+        <activity android:name=".WordDetailsActivity" />
+        <activity android:name=".StudyEndActivity" />
+        <activity android:name=".SelectLevelBooksActivity" />
+        <activity android:name=".WordbookActivity" />
+        <activity android:name=".WordItemActivity" />
     </application>
 
 </manifest>
