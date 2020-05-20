@@ -118,7 +118,7 @@ public class LevelOne01Activity extends AppCompatActivity {
                             .setMessage("时间到")
                             .setPositiveButton("退出", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    Intent intent3 = new Intent(LevelOne01Activity.this, MainActivity.class);
+                                    Intent intent3 = new Intent(LevelOne01Activity.this, FindGameActivity.class);
                                     intent3.putExtra("tag", "find");
                                     startActivity(intent3);
                                 }
@@ -251,7 +251,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         imgRuturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LevelOne01Activity.this, Game2Fragment.class);
+                Intent intent = new Intent(LevelOne01Activity.this, FindGameActivity.class);
                 intent.putExtra("tag", "find");
                 startActivity(intent);
             }
@@ -478,6 +478,8 @@ public class LevelOne01Activity extends AppCompatActivity {
         tvExplain.setTextSize(25);
         tvWord.setTextSize(30);
         tvPin.setTextSize(25);
+        TTSUtility ttsUtility = new TTSUtility(this);
+        ttsUtility.speaking(word.getWord()+word.getExplanation());
 
         //popupWindow.setBackgroundDrawable(this.getResources().getDrawable(
         //R.mipmap.ic_launcher));// 设置背景图片，不能在布局中设置，要通过代码来设置

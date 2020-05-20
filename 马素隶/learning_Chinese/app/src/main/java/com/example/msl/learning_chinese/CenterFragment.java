@@ -417,7 +417,6 @@ public class CenterFragment extends Fragment {
                         Log.e("wordNum", wordNum + "");
                         Log.e("wordList.size", wordList.size() + "");
                         if (wordNum >= wordList.size()) {
-
                             if (records.size() != 0) {
                                 btnStart.setText("再学一组");
                             } else {
@@ -427,8 +426,10 @@ public class CenterFragment extends Fragment {
                                 wordNum = 0;
                                 updateProgress();
                             }
-                        } else {
-
+                        } else if(wordNum < wordList.size() && wordNum>0){
+                                btnStart.setText("继续学习");
+                        } else{
+                            btnStart.setText("开始学习");
                         }
                     }
                 });
@@ -673,7 +674,9 @@ public class CenterFragment extends Fragment {
                 }.getType());
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        if (null == learnedList) {
+                        if(null==notLearnedList){
+                            tvBookState.setText("已学习 " + 0 + "/" + 0 + "(" + 0 + "%)");
+                        }else if (null == learnedList) {
                             tvBookState.setText("已学习 " + 0 + "/" + notLearnedList.size() + "(" + 0 + "%)");
                         } else {
                             Log.e("learnedList.size()", learnedList.size() + "");

@@ -78,15 +78,17 @@ public class StudyActivity extends AppCompatActivity {
     }
 
     private void playAudio() {
-        mediaPlayer = new MediaPlayer();
-        Uri uri = Uri.parse(Constant.AUDIO_URL + wordList.get(wordNum).getAudio());
-        try {
-            mediaPlayer.setDataSource(this, uri);
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        mediaPlayer = new MediaPlayer();
+//        Uri uri = Uri.parse(Constant.AUDIO_URL + wordList.get(wordNum).getAudio());
+//        try {
+//            mediaPlayer.setDataSource(this, uri);
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        TTSUtility ttsUtility = new TTSUtility(StudyActivity.this);
+        ttsUtility.speaking(wordList.get(wordNum).getWord());
     }
 
     @Override

@@ -64,7 +64,7 @@ public class WordItemActivity extends AppCompatActivity {
         word = gson.fromJson(intentStr,Word.class);
         collectOrNot();
         initDate();
-        playAudio();
+//        playAudio();
     }
     private void findView() {
 //        tvWord = findViewById(R.id.tv_word);
@@ -81,11 +81,12 @@ public class WordItemActivity extends AppCompatActivity {
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();//暂停播放
-                } else {
-                    mediaPlayer.start();
-                }
+//                if (mediaPlayer.isPlaying()) {
+//                    mediaPlayer.pause();//暂停播放
+//                } else {
+//                    mediaPlayer.start();
+//                }
+                playAudio();
             }
         });
         imgCollection = findViewById(R.id.img_collection);
@@ -155,15 +156,17 @@ public class WordItemActivity extends AppCompatActivity {
 //        tvPinyin3.setText(word.getPinyin3());
     }
     private void playAudio() {
-        mediaPlayer = new MediaPlayer();
-        Uri uri = Uri.parse(Constant.AUDIO_URL + word.getAudio());
-        try {
-            mediaPlayer.setDataSource(this, uri);
-            mediaPlayer.prepare();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        mediaPlayer = new MediaPlayer();
+//        Uri uri = Uri.parse(Constant.AUDIO_URL + word.getAudio());
+//        try {
+//            mediaPlayer.setDataSource(this, uri);
+//            mediaPlayer.prepare();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        TTSUtility ttsUtility = new TTSUtility(WordItemActivity.this);
+        ttsUtility.speaking(word.getWord());
     }
     /*
     加入收藏夹

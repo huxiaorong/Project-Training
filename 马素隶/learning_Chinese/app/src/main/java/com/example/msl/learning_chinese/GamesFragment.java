@@ -12,31 +12,24 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
 public class GamesFragment extends Fragment{
-    private ImageView ivGameBegin;
-    private RelativeLayout rl;
-    private GestureDetector gd;
+    private Button btnFindGame;
+    private Button btnGame1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.activity_game1_begin,
+        View view =  inflater.inflate(R.layout.tab_game,
                 container, false);
         findViews(view);
         bindListener();
-        rl.setLongClickable(true);
-        gd = new GestureDetector(getActivity(), new MyOnGestureListener((AppCompatActivity) getActivity(),1,this));
-        rl.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gd.onTouchEvent(event);
-            }
-        });
+
         return view;
     }
 
@@ -44,8 +37,8 @@ public class GamesFragment extends Fragment{
      * 获取视图
      */
     public void findViews(View view){
-        ivGameBegin = view.findViewById(R.id.iv_begin_game);
-        rl = view.findViewById(R.id.rl_rl);
+        btnFindGame = view.findViewById(R.id.btn_findGame);
+        btnGame1 = view.findViewById(R.id.btn_game1);
     }
 
     /**
@@ -53,7 +46,8 @@ public class GamesFragment extends Fragment{
      */
     private void bindListener(){
         MyListener myListener = new MyListener();
-        ivGameBegin.setOnClickListener(myListener);
+        btnGame1.setOnClickListener(myListener);
+        btnFindGame.setOnClickListener(myListener);
 
     }
 
@@ -66,9 +60,13 @@ public class GamesFragment extends Fragment{
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.iv_begin_game:
-                    Intent intent = new Intent(getActivity(),Game1PlayActivity.class);
+                case R.id.btn_findGame:
+                    Intent intent = new Intent(getActivity(),FindGameActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.btn_game1:
+                    Intent intent1 = new Intent(getActivity(),Game1BeginActivity.class);
+                    startActivity(intent1);
                     break;
             }
         }

@@ -43,6 +43,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Game1PlayActivity"></activity>
+        <activity android:name=".Game1BeginActivity"/>
+        <activity android:name=".FindGameActivity"/>
         <activity android:name=".LevelOneStarActivity" />
         <activity android:name=".LevelOne01Activity"></activity>
         <activity android:name=".StudyActivity" />

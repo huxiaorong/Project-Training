@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -43,6 +44,10 @@ public class WordbookActivity extends AppCompatActivity {
         String str2 = intent.getStringExtra("notLearnedList");
         learnedList = gson.fromJson(str1,new TypeToken<List<Word>>(){}.getType());
         notLearnedList = gson.fromJson(str2,new TypeToken<List<Word>>(){}.getType());
+        Log.e("learnedList","str1"+str1);
+        Log.e("learnedListSize",notLearnedList.size()+"");
+        Log.e("notLearnedList","str2"+str2);
+        Log.e("notLearnedListSize",notLearnedList.size()+"");
         bookList = learnedList;
         init();
     }

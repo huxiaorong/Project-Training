@@ -76,7 +76,7 @@ public class WordDetailsActivity extends AppCompatActivity {
         word = wordList.get(Constant.USER_STATUS.getNumberTag());
         collectOrNot();
         initDate();
-        playAudio();
+
         prompt();
     }
 
@@ -96,11 +96,12 @@ public class WordDetailsActivity extends AppCompatActivity {
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();//暂停播放
-                } else {
-                    mediaPlayer.start();
-                }
+//                if (mediaPlayer.isPlaying()) {
+//                    mediaPlayer.pause();//暂停播放
+//                } else {
+//                    mediaPlayer.start();
+//                }
+                playAudio();
             }
         });
         imgCollection = findViewById(R.id.img_collection);
@@ -224,15 +225,17 @@ public class WordDetailsActivity extends AppCompatActivity {
     }
 
     private void playAudio() {
-        mediaPlayer = new MediaPlayer();
-        Uri uri = Uri.parse(Constant.AUDIO_URL + word.getAudio());
-        try {
-            mediaPlayer.setDataSource(this, uri);
-            mediaPlayer.prepare();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        mediaPlayer = new MediaPlayer();
+//        Uri uri = Uri.parse(Constant.AUDIO_URL + word.getAudio());
+//        try {
+//            mediaPlayer.setDataSource(this, uri);
+//            mediaPlayer.prepare();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        TTSUtility ttsUtility = new TTSUtility(WordDetailsActivity.this);
+        ttsUtility.speaking(word.getWord());
     }
 
     /*

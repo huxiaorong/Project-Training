@@ -3,6 +3,7 @@ package com.example.msl.learning_chinese;
 import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
 import android.nfc.FormatException;
 import android.os.Handler;
 import android.os.Message;
@@ -216,7 +217,8 @@ public class Game1PlayActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.iv_left:
-                    finish();
+                    Intent intent = new Intent(Game1PlayActivity.this,Game1PlayActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.bt_send:
                     content = mEtContent.getText().toString();

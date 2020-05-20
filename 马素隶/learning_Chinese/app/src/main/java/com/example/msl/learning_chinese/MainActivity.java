@@ -43,7 +43,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private Map<String, MyTabSpec> map = new HashMap<>();
-    private String [] tabStrId = {"首页", "复习", "趣学"};
+    private String[] tabStrId = {"首页", "复习", "趣学"};
     // 用于记录当前正在显示的Fragment
     private Fragment curFragment = null;
 
@@ -51,30 +51,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 1、初始化，初始化MyTabSpec对象
+        // Fragment、ImageView、TextView、normalImage、selectImage
+        initData();
+
+        // 2、设置监听器，在监听器中完成切换
+        setListener();
+
+        // 3、设置默认显示的TabSpec
 
         Intent intent = getIntent();
-        String tag = intent.getStringExtra("tag");
-        if (tag!=null && tag.equals("find")) {
-            FragmentTransaction transaction =
-                    getSupportFragmentManager().beginTransaction();
-            Bundle bundle = new Bundle();
-            bundle.putString("tag", "find");
-            Game2Fragment game2Fragment = new Game2Fragment();
-            game2Fragment.setArguments(bundle);
-            transaction.add(R.id.tab_content,game2Fragment).commit();
-        }
-        else {
-            // 1、初始化，初始化MyTabSpec对象
-            // Fragment、ImageView、TextView、normalImage、selectImage
-            initData();
-
-            // 2、设置监听器，在监听器中完成切换
-            setListener();
-
-            // 3、设置默认显示的TabSpec
+        if (intent.getStringExtra("type")!=null && intent.getStringExtra("type").equals("quxue")){
+            changeTab(tabStrId[2]);
+        }else {
             changeTab(tabStrId[0]);
         }
     }
+
     private class MyTabSpec {
         private ImageView imageView = null;
         private TextView textView = null;
@@ -84,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 设置是否被选中
         private void setSelect(boolean b) {
-            if(b) {
+            if (b) {
                 imageView.setImageResource(selectImage);
                 textView.setTextColor(
                         Color.parseColor("#0000FF"));
@@ -137,12 +130,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     // 自定义的监听器类，完成Tab页面切换及图表转化
-    private class MyListener implements View.OnClickListener{
+    private class MyListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
@@ -173,19 +162,19 @@ public class MainActivity extends AppCompatActivity {
     private void changeFragment(String s) {
         Fragment fragment = map.get(s).getFragment();
 
-        if(curFragment == fragment) return;
+        if (curFragment == fragment) return;
 
         // Fragment事务 - Fragment事务管理器来获取
         FragmentTransaction transaction =
                 getSupportFragmentManager().beginTransaction();
 
         // 将之前你显示的Fragment隐藏掉
-        if(curFragment!=null)
+        if (curFragment != null)
             transaction.hide(curFragment);
 
         // 如果当前Fragment没有被添加过，则添加到
         // Activity的帧布局中
-        if(!fragment.isAdded()) {
+        if (!fragment.isAdded()) {
             transaction.add(R.id.tab_content, fragment);
         }
         // 显示对应Fragment

@@ -14,16 +14,16 @@
         android:textColor="#515151"
         android:textSize="18dp"
         android:gravity="center"/>
-    <com.example.administrator.leachinese.InnerGridView
+    <com.example.msl.learning_chinese.InnerGridView
         android:id="@+id/gvWeek"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="7">
-    </com.example.administrator.leachinese.InnerGridView>
-    <com.example.administrator.leachinese.InnerGridView
+    </com.example.msl.learning_chinese.InnerGridView>
+    <com.example.msl.learning_chinese.InnerGridView
         android:id="@+id/gvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="7">
-    </com.example.administrator.leachinese.InnerGridView>
+    </com.example.msl.learning_chinese.InnerGridView>
 </LinearLayout>

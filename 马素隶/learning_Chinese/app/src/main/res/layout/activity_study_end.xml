@@ -19,12 +19,13 @@
             android:layout_height="50dp"
             android:src="@drawable/text_end"/>
     </LinearLayout>
-    <com.example.administrator.leachinese.SignDate
+
+    <com.example.msl.learning_chinese.SignDate
         android:id="@+id/signDate"
         android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </com.example.administrator.leachinese.SignDate>
+    </com.example.msl.learning_chinese.SignDate>
     <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
