@@ -1,5 +1,6 @@
 package com.example.msl.learning_chinese;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,10 +17,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.ant.liao.GifView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 
 public class GamesFragment extends Fragment{
     private Button btnFindGame;
     private Button btnGame1;
+    private GifView mGif;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -29,7 +37,7 @@ public class GamesFragment extends Fragment{
                 container, false);
         findViews(view);
         bindListener();
-
+        gifView();
         return view;
     }
 
@@ -39,6 +47,7 @@ public class GamesFragment extends Fragment{
     public void findViews(View view){
         btnFindGame = view.findViewById(R.id.btn_findGame);
         btnGame1 = view.findViewById(R.id.btn_game1);
+        mGif = view.findViewById(R.id.gv_mgift);
     }
 
     /**
@@ -69,6 +78,31 @@ public class GamesFragment extends Fragment{
                     startActivity(intent1);
                     break;
             }
+        }
+    }
+    /**
+     * GifView获取图片资源
+     */
+    private void gifView(){
+        try {
+            @SuppressLint("ResourceType") InputStream is = this.getResources().openRawResource(R.drawable.bear);//获取动图资源
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] b = new byte[2048];
+            int len = 0;
+            while ((len = is.read(b, 0, 2048)) != -1) {
+                baos.write(b, 0, len);
+            }
+            baos.flush();//刷新流，确保传递完全
+            byte[] bytes = baos.toByteArray();//转换成Byte数组
+            mGif.setGifImage(bytes);
+            // 添加监听器
+            //gif.setOnClickListener(this);
+            // 设置显示的大小，拉伸或者压缩,由于GiftView在布局文件中设置宽和高无效，所以要设置宽和高
+            mGif.setShowDimension(300, 300);
+            // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
+            mGif.setGifImageType(GifView.GifImageType.WAIT_FINISH);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
