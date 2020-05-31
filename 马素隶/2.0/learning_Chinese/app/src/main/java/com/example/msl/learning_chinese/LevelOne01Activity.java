@@ -201,7 +201,7 @@ public class LevelOne01Activity extends AppCompatActivity {
         tvExplain=findViewById(R.id.tv_phrase);
         ll = findViewById(R.id.ll);
 
-        int resId = getResources().getIdentifier("a"+Constant.guan, "drawable", this.getPackageName());
+        int resId = getResources().getIdentifier("a"+Constant.level, "drawable", this.getPackageName());        Log.e("关卡","a"+Constant.level);
 
         if(resId!=0){
             Drawable image = getResources().getDrawable(resId);
@@ -331,13 +331,13 @@ public class LevelOne01Activity extends AppCompatActivity {
                                 Intent intent1 = new Intent(LevelOne01Activity.this, LevelOne01Activity.class);
                                 Constant.guan++;
 
-                                if(Constant.USER!=null){
+                                if(Constant.USER_STATUS!=null){
                                     if(Constant.level==1){
-                                        Constant.USER.setLevelone(Constant.guan);
+                                        Constant.USER_STATUS.setLevelone(Constant.guan);
                                     }else if(Constant.level==2){
-                                      Constant.USER.setLeveltwo(Constant.guan);
+                                      Constant.USER_STATUS.setLeveltwo(Constant.guan);
                                     }else if(Constant.level==3){
-                                        Constant.USER.setLevelthree(Constant.guan);
+                                        Constant.USER_STATUS.setLevelthree(Constant.guan);
                                     }
                                 }
                                 //1 2关
@@ -378,11 +378,11 @@ public class LevelOne01Activity extends AppCompatActivity {
 
                 if(Constant.guan<GUAN_LEVEL1){
                     textView.offsetLeftAndRight(10);
-                    textView.setTextSize(45);
-                }else if(Constant.guan>=GUAN_LEVEL1 && Constant.guan<GUAN_LEVEL2){
-                    textView.setTextSize(40);
-                }else if(Constant.guan>=GUAN_LEVEL2){
                     textView.setTextSize(35);
+                }else if(Constant.guan>=GUAN_LEVEL1 && Constant.guan<GUAN_LEVEL2){
+                    textView.setTextSize(30);
+                }else if(Constant.guan>=GUAN_LEVEL2){
+                    textView.setTextSize(25);
                 }
 
                 textView.setBackground(getResources().getDrawable(R.drawable.shaper));
@@ -475,11 +475,19 @@ public class LevelOne01Activity extends AppCompatActivity {
         tvWord.setText(word.getWord());
         tvPin.setText(word.getPinyin());
         tvExplain.setText(word.getExplanation());
-        tvExplain.setTextSize(25);
         tvWord.setTextSize(30);
         tvPin.setTextSize(25);
+        tvPin.setText(PinyinUtil.getPinyinString(word.getWord()));
         TTSUtility ttsUtility = new TTSUtility(this);
-        ttsUtility.speaking(word.getWord()+word.getExplanation());
+        ttsUtility.speaking(word.getWord());
+        ImageView ivListen = popupView.findViewById(R.id.iv_listen);
+        ivListen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TTSUtility ttsUtility = new TTSUtility(getApplicationContext());
+                ttsUtility.speaking(word.getExplanation());
+            }
+        });
 
         //popupWindow.setBackgroundDrawable(this.getResources().getDrawable(
         //R.mipmap.ic_launcher));// 设置背景图片，不能在布局中设置，要通过代码来设置
