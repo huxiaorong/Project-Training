@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>2132</title>
+	<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@1.3/dist/hanzi-writer.min.js"></script>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+</head>
+<body>
+<!-- 不通过网格 -->
+<div id="character-target-div"></div>
+<!-- //通过svm画方格 -->
+<svg width="300" height="300" style="border: 1px solid rgb(221,221,221);" id="grid-background-target">
+	<line x1="0" y1="0" x2="300" y2="300" stroke="#DDD" />
+	<line x1="300" y1="0" x2="0" y2="300" stroke="#DDD" />
+	<line x1="150" y1="0" x2="150" y2="300" stroke="#DDD" />
+	<line x1="0" y1="150" x2="300" y2="150" stroke="#DDD" />
+</svg>
+</body>
+<script>
+        var inputstr = "一";//第一个默认值
+        var options =  {
+            width: 300,
+            height: 300,
+            padding: 5,
+            showOutline:true,
+            strokeAnimationSpeed:11 ,
+            delayBetweenStrokes:2,
+            radicalColor: '#168F16',
+            showCharacter: false,
+            delayBetweenLoops:100,
+            showHintAfterMisses:1,
+            highlightOnComplete:false,
+        };
+        let hw =  HanziWriter.create('grid-background-target', inputstr, options);
+        function hwanimate(hanzi) {
+            inputstr = hanzi;
+            if(inputstr && inputstr.trim().length>0) {
+                hw.setCharacter(inputstr.substr(0,1).trim());
+                inputstr = inputstr.substring(1)
+            }
+            // hw.animateCharacter();//单次
+            //多次重复
+            // hw.loopCharacterAnimation();
+            hwtest()
+        };
+
+        hwtest()
+        function hwtest() {
+            //showHintAfterMisses:1,手写错误次数后提示 false 禁用
+            //hw.quiz();//回调函数
+           var phw = new Promise((res, rej)=>{
+                hw.quiz({
+                    onMistake: function(strokeData) { },//错误
+                    onCorrectStroke: function(strokeData) { },//正确
+
+                });
+            })
+            phw.then((data)=>{hw.setCharacter(data);hwtest()}, ()=>{console.log(22)});
+            /*其他方法
+            writer.setCharacter(newCharacter) 加载新角色并重新渲染。
+            writer.showCharacter() 显示字符（如果当前已隐藏）
+            writer.hideCharacter() 隐藏当前显示的字符
+            writer.showOutline() 显示角色轮廓（如果当前已隐藏）
+            writer.hideOutline() 隐藏角色轮廓（如果当前已显示）
+            writer.updateColor(colorName, newValue) 更改任何颜色选项的值。例如：writer.updateColor('strokeColor', '#AA12CD')
+            writer.cancelQuiz() 立即取消当前正在运行的测验
+            */
+        };
+    </script>
+
+</html>

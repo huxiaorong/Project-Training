@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mbg">
+    <LinearLayout
+        android:layout_above="@id/gv_mgift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="找你妹"
+            android:textSize="20sp"
+            android:id="@+id/btn_findGame"
+            android:background="@drawable/et_content_bg"/>
+        <Button
+            android:textSize="20sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="成语接龙"
+            android:id="@+id/btn_game1"
+            android:background="@drawable/et_content_bg"/>
+    </LinearLayout>
+
+
+
+    <com.ant.liao.GifView
+        android:id="@+id/gv_mgift"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="140dp"
+        android:layout_height="140dp" />
+
+</RelativeLayout>

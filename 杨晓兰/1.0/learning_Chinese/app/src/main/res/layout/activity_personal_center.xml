@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="240dp"
+    android:layout_height="500dp"
+    android:layout_marginTop="50dp"
+    android:layout_marginLeft="20dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+
+        android:layout_width="238dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/headPicture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/toux"/>
+        <TextView
+            android:id="@+id/nickName"
+            android:text="会飞的鱼"
+            android:layout_gravity="center"
+            android:textSize="17dp"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/ahead"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/qianjincopy"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="238dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/totalDays"
+                android:text="2"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="坚持天数"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/totalNumber"
+                android:text="100"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="学习总量"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/myPlane"-->
+<!--        android:layout_marginLeft="70dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <ImageView-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/bijiben"/>-->
+<!--        <TextView-->
+<!--            android:text="我的计划"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+<!--    </LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/myLike"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/shoucang"/>
+        <TextView
+            android:text="我的收藏"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/myMistake"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/cuotiben"/>
+        <TextView
+            android:text="错题本"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/mySetting"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/settings"/>
+        <TextView
+            android:text="设置"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/inDarken"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/yejianmoshi"/>
+        <TextView
+            android:text="夜间模式"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <ImageVie
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/houtui_01"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/houtui"/>
+</LinearLayout>
