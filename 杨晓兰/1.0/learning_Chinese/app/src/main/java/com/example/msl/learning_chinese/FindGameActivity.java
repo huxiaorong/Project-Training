@@ -1,8 +1,11 @@
 package com.example.msl.learning_chinese;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,6 +61,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +71,6 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
         rl.setOnTouchListener(this);
         rl.setLongClickable(true);
         gd = new GestureDetector(this, this);
-
-        //虚拟数据
-        Constant.USER.setId(1);
-        Constant.USER.setLevelone(1);
-        Constant.USER.setLeveltwo(1);
-        Constant.USER.setLevelthree(1);
 
         start = findViewById(R.id.btn_start);
         open = findViewById(R.id.open);
@@ -87,6 +85,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void setSpinner(){
 
         String[] curs = getResources().getStringArray(R.array.level);
@@ -99,6 +98,12 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
         //adapter = new ArrayAdapter<String>(this,R.layout.spinner_item,name);
 
         adapter.setDropDownViewResource(R.layout.dropdown_stytle);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            spinner.setBackground(getDrawable(R.drawable.drop));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            spinner.setPopupBackgroundDrawable(getDrawable(R.drawable.drop));
+        }
 
         spinner.setAdapter(adapter);
 
@@ -110,7 +115,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
                 //点击处理事件
                 Constant.level=position+1;
 
-                if(Constant.USER.getId()==0||Constant.USER==null){
+                if(Constant.USER_STATUS.getId()==0||Constant.USER_STATUS==null){
                     Constant.guan=1;
                 }
 
@@ -128,13 +133,13 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FindGameActivity.this, LevelOne01Activity.class);
-                if(Constant.USER.getId()!=0&&Constant.USER!=null){
+                if(Constant.USER_STATUS.getId()!=0&&Constant.USER_STATUS!=null){
                     if(Constant.level==1){
-                        Constant.guan=Constant.USER.getLevelone();
+                        Constant.guan=Constant.USER_STATUS.getLevelone();
                     }else if(Constant.level==2){
-                        Constant.guan=Constant.USER.getLeveltwo();
+                        Constant.guan=Constant.USER_STATUS.getLeveltwo();
                     }else if(Constant.level==3){
-                        Constant.guan=Constant.USER.getLevelthree();
+                        Constant.guan=Constant.USER_STATUS.getLevelthree();
                     }
                 }
                 intent.putExtra("findToO1","findToO1");
@@ -170,7 +175,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
             @Override
             public void onClick(View v) {
 
-                saveUserLevelGuan(Constant.USER);
+                saveUserLevelGuan(Constant.USER_STATUS);
                 Intent intent = new Intent(FindGameActivity.this,MainActivity.class);
                 intent.putExtra("type","quxue");
                 startActivity(intent);
@@ -181,7 +186,7 @@ public class FindGameActivity extends AppCompatActivity implements View.OnTouchL
 
     private void saveUserLevelGuan(User user) {
         Gson gson=new Gson();
-        String strUser =gson.toJson(Constant.USER);
+        String strUser =gson.toJson(Constant.USER_STATUS);
         FormBody body = new FormBody.Builder().add("strUser", strUser).build();
         Request request = new Request.Builder()
                 .url(Constant.GAME_TWO + "save")
