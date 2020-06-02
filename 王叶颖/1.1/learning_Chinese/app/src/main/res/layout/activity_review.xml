@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#cdeaea"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="复习"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+
+        android:background="@drawable/reviewyuan"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_yuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_reviewed"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="#00B9A8"
+                android:textStyle="bold"
+                android:textSize="35sp"
+                android:layout_width="35dp"
+                android:layout_height="45dp" />
+
+            <TextView
+                android:layout_marginTop="40dp"
+                android:text="/"
+                android:textSize="29sp"
+                android:textColor="#00B9A8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_goal"
+                android:layout_marginTop="40dp"
+                android:textSize="29sp"
+                android:textColor="#00B9A8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginLeft="28dp"
+                android:text="复习时长(分钟)"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="复习方式"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 第一行复习方法-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:background="@drawable/reviewbg4"
+                android:id="@+id/ll_tingyinxuanzi"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="听音选字"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_xuancitiankong"
+                android:background="@drawable/reviewbg1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="选词填空"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 第二行复习方法-->
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_hanzishiyin"
+                android:background="@drawable/reviewbg2"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="汉字识音"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_zicisuting"
+                android:background="@drawable/reviewbg3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="字词速听"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
+

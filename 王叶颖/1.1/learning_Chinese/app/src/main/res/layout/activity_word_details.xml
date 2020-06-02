@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d1e7fd"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="3dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="3dp"
+                android:src="@drawable/study_state_tips" />
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:text="已学 15个，还剩 15个"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="25dp">
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent"></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="天"
+                android:textSize="35dp" />
+
+            <ImageView
+                android:id="@+id/img_collection"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/beforecollect" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pinyin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:paddingHorizontal="20dp"
+                android:text="wǒ  men"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/img_play"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/laba" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#35c5bd" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingVertical="8dp"
+                android:text="基本解释：" />
+
+            <TextView
+                android:id="@+id/tv_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingVertical="8dp"
+                android:text="1.春季。 2.指一年的时间。 3.指男女情欲。 4.比喻生机。 5.姓" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="#dfdbdb"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="组词：" />
+
+
+..
+    </LinearLayout>
+    <LinearLayout
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal">
+
+            <com.example.msl.learning_chinese.YXLTextView
+                android:id="@+id/tv_sentence1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:myText="你好" />
+
+            <com.example.msl.learning_chinese.YXLTextView
+                android:id="@+id/tv_sentence2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:myText="你好" />
+
+            <com.example.msl.learning_chinese.YXLTextView
+                android:id="@+id/tv_sentence3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:myText="你好" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_details"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="right"
+        android:background="@drawable/bg_details"
+        android:text="查看百度汉语释义" />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_gravity="center"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:background="#d1e7fd"
+        android:scrollbars="vertical" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/know_bg" />
+
+            <Button
+                android:id="@+id/btn_know"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="#d1e7fd"
+                android:text="会了" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/no_bg" />
+
+            <Button
+                android:id="@+id/btn_no"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="#d1e7fd"
+                android:text="不会" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
